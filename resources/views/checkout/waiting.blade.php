@@ -252,13 +252,7 @@
 
 {{-- Header --}}
 <header class="site-header fade-up">
-    <div class="header-logo">
-    <a href="{{ route('home') }}">
-        <img src="{{ Storage::url('LOGO-FARHANA-NEW-TRANSPARENT_WHITE.png') }}" 
-             alt="Farhana" 
-             class="h-14 md:h-20 w-auto object-contain">
-    </a>
-</div>
+    <div class="header-logo">Farhana</div>
 </header>
 
 <div class="page-wrap">
