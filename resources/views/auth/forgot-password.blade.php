@@ -62,8 +62,8 @@
                     <div class="border-b border-gray-100 pb-2 focus-within:border-[#2F3526] transition-colors duration-500">
                         <label for="email" class="block text-[9px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-1">Registered Email</label>
                         <input id="email" type="email" name="email" :value="old('email')" required autofocus 
-                            class="w-full border-none bg-transparent p-0 focus:ring-0 text-sm tracking-wide text-gray-800 placeholder-gray-200"
-                            placeholder="NAME@DOMAIN.COM">
+                            class="w-full border-none bg-transparent p-0 focus:ring-0 text-sm tracking-wide text-gray-800 placeholder-gray-200 placeholder:text-[10px]"
+                            placeholder="USERNAME@GMAIL.COM">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
@@ -76,7 +76,7 @@
                         {{-- Back to Login --}}
                         <div class="text-center">
                             <a href="{{ route('login') }}" class="text-[10px] tracking-[0.3em] text-gray-400 uppercase hover:text-[#2F3526] transition-colors">
-                                <span class="mr-2">←</span> Back to Login
+                                <span class="mr-2"></span> Back to Login
                             </a>
                         </div>
                     </div>

@@ -33,7 +33,7 @@
     justify-content: flex-start; /* Memulai dari kiri */
     width: 220px; /* Lebar tetap agar ukuran pill Order History & Shipping Address sama persis */
     padding: 12px 24px; /* Padding kiri-kanan lebih lega agar bentuk pill terlihat bagus */
-    border-radius: 99px; /* Pill shape lebih konsisten */
+    border-radius: 10px; /* Pill shape lebih konsisten */
     font-size: 10px; 
     font-weight: 700;
     letter-spacing: .15em; 
@@ -100,7 +100,7 @@
         .btn-primary {
             background: var(--primary);
             color: var(--white);
-            border-radius: 99px;
+            border-radius: 10px;
             transition: all .3s ease;
             display: inline-flex; align-items: center; justify-content: center;
         }
@@ -231,7 +231,7 @@
                                     <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                                         @if($order->tracking_number)
                                         <button @click="openTrackingModal('{{ $order->tracking_number }}')" 
-                                                class="px-8 py-4 rounded-full border border-gray-200 text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all">
+                                                class="px-8 py-4 rounded-[10px] border border-gray-200 text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all">
                                             Track Order
                                         </button>
                                         @endif

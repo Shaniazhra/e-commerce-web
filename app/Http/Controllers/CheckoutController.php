@@ -36,6 +36,8 @@ class CheckoutController extends Controller
 
         $cart = session()->get('cart', []);
 
+        Log::info('Cart keys di index:', ['keys' => array_keys($cart)]);
+
         if (empty($cart)) {
             return redirect()->route('home')->with('error', 'Keranjang belanja kosong.');
         }
@@ -196,8 +198,10 @@ class CheckoutController extends Controller
                     ],
                 ];
 
-                $snapToken = Snap::getSnapToken($payload);
-                $order->update(['payment_token' => $snapToken]);
+Log::info('Midtrans payload:', ['payload' => $payload]);
+$snapToken = Snap::getSnapToken($payload);
+Log::info('Snap token berhasil:', ['token' => $snapToken]);
+$order->update(['payment_token' => $snapToken]);
 
                 return $order;
             });
@@ -315,6 +319,13 @@ class CheckoutController extends Controller
         MidtransConfig::$isProduction = config('midtrans.is_production');
         MidtransConfig::$isSanitized  = true;
         MidtransConfig::$is3ds        = true;
+        MidtransConfig::$curlOptions  = [
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_TIMEOUT        => 60,     
+            CURLOPT_CONNECTTIMEOUT => 30, 
+            CURLOPT_HTTPHEADER     => [],
+        ];
     }
 
     private function parseServiceCode(string $raw): string
@@ -385,23 +396,24 @@ class CheckoutController extends Controller
     }
 
     private function restoreStockAndCancel(Order $order): void
-{
-    if ($order->status === 'cancelled') return;
+    {
+        if ($order->status === 'cancelled') return;
 
-    DB::transaction(function () use ($order) {
-        $order->update(['status' => 'cancelled']);
+        DB::transaction(function () use ($order) {
+            $order->update(['status' => 'cancelled']);
 
-        // Pre-order: stok belum pernah dikurangi, jadi tidak perlu dikembalikan
-        if ($order->is_preorder) return;
+            // Pre-order: stok belum pernah dikurangi, jadi tidak perlu dikembalikan
+            if ($order->is_preorder) return;
 
-        foreach ($order->items as $item) {
-            $variant = ProductVariant::where('product_id', $item->product_id)
-                ->where('color', $item->color)
-                ->where('size', $item->size)
-                ->first();
-            if ($variant) {
-                $variant->increment('stock', $item->quantity);
+            foreach ($order->items as $item) {
+                $variant = ProductVariant::where('product_id', $item->product_id)
+                    ->where('color', $item->color)
+                    ->where('size', $item->size)
+                    ->first();
+                if ($variant) {
+                    $variant->increment('stock', $item->quantity);
+                }
             }
-        }
-    });
-}}
+        });
+    }
+}

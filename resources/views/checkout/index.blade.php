@@ -356,7 +356,7 @@
             font-weight: 800;
             letter-spacing: .25em;
             text-transform: uppercase;
-            border-radius: 50px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all .25s;
         }
@@ -699,7 +699,13 @@
         </svg>
         Cart
     </a>
-    <div class="header-logo">Farhana</div>
+    <div class="header-logo">
+    <a href="{{ route('home') }}">
+        <img src="{{ Storage::url('LOGO-FARHANA-NEW-TRANSPARENT_WHITE.png') }}" 
+             alt="Farhana" 
+             class="h-14 md:h-20 w-auto object-contain">
+    </a>
+</div>
     <div class="header-spacer"></div>
 </header>
 
@@ -746,7 +752,7 @@
 
                 {{-- ── 01 SHIPPING ADDRESS ── --}}
                 <div class="section fade-up delay-2">
-                    <div class="section-label">01 — Shipping Address</div>
+                    <div class="section-label">Shipping Address</div>
 
                     @if($defaultAddr)
                     <div class="addr-display">
@@ -777,7 +783,7 @@
 
                 {{-- ── 02 SHIPPING METHOD ── --}}
                 <div class="section fade-up delay-3">
-                    <div class="section-label">02 — Shipping Method</div>
+                    <div class="section-label">Shipping Method</div>
                     <div id="courier_list">
                         <div class="courier-empty">Select location to calculate shipping</div>
                     </div>
@@ -785,7 +791,7 @@
 
                 {{-- ── 03 PAYMENT METHOD ── --}}
                 <div class="section fade-up delay-4">
-                    <div class="section-label">03 — Payment Method</div>
+                    <div class="section-label">Payment Method</div>
                     <div>
                         @php
                         $payments = [
@@ -847,7 +853,7 @@
                     </div>
                     <div class="totals-row">
                         <span>Shipping</span>
-                        <span id="shipping_cost_display" style="font-style:italic; color:rgba(255,255,255,.35); font-size:10px;">Select method</span>
+                        <span id="shipping_cost_display" style="font-style; color:rgba(255,255,255,.35); font-size:10px;">Select method</span>
                     </div>
 
                     <div class="totals-divider"></div>
@@ -1018,7 +1024,7 @@ $(document).ready(function () {
         if (!destId) return;
 
         $('#hidden_shipping_cost, #hidden_courier_name, #hidden_service_code').val('');
-        $('#shipping_cost_display').text('Calculating...').css({ fontStyle: 'italic', color: 'rgba(255,255,255,.35)', fontSize: '10px' });
+        $('#shipping_cost_display').text('Calculating...').css({color: 'rgba(255,255,255,.35)', fontSize: '10px' });
         $('#grand_total_display').text('Rp ' + subtotal.toLocaleString('id-ID'));
         checkFormValidity();
 
@@ -1075,7 +1081,7 @@ $(document).ready(function () {
                 $('#courier_list').html('<div class="courier-empty" style="color:#fb923c; border-color:#fed7aa;">Could not load shipping rates.</div>');
             }
             $('#shipping_cost_display').text('Select method');
-        }).fail(() => {
+}).fail(() => {
             $('#courier_list').html('<div class="courier-empty" style="color:#f87171; border-color:#fca5a5;">Connection error. Please try again.</div>');
         });
     }
